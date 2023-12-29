@@ -93,7 +93,7 @@ console.log(dato);*/
 function generateCard(dato) {
 
 
-    return     `<div class="card my-3" style="width: 25rem;">
+    return     `<div class="card my-3 m-auto" style="width: 40rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>

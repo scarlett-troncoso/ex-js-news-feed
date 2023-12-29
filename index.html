@@ -18,32 +18,50 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
 
-    <body>
+    <body class="bg-dark-subtle">
         <header>
-            <div class="container">
-                <h1>News Feed</h1>
+            <h1 class="text-center my-3">News Feed</h1>
+            <div class="container bg-light" style="width: 40rem;">
+                
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex my-3 align-items-center">
+                        <p class="px-2">Filtra per Tags:</p>
+                        <select name="tag_type " id="tag_type" class="">
+                            <option value="all" selected>Tutti i tags</option>
+                            <option value="geo">Geo</option>
+                            <option value="tech">Tech</option>
+                            <option value="viaggi">User</option>
+                            <option value="cucina">Cucina</option>
+                            <option value="arte">Arte</option>
+                        </select>
+                    </div>
+                    <div class="my-3 align-items-center">
+                        <input type="radio" placeholder="Solo news salvate">
+                        <label for="">Solo news salvate</label>
+                    </div>
+                </div>
             </div>
         </header>
 
     
         <main >
-            <div class="container cardAppend">
-                <!--<div class="card " style="width: 25rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title d-flex">Card title</h5>
-                            <div>
-                                <i class="fa-regular fa-bookmark"></i>
+            <div class="container cardAppend w-50">
+                <!--<div class="card " style="width: 40rem;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title d-flex">Card title</h5>
+                                <div>
+                                    <i class="fa-regular fa-bookmark"></i>
+                                </div>
                             </div>
-                        </div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div class="">
-                            <img src="https://picsum.photos/id/237/300/200" alt="">
-                        </div>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div> 
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="">
+                                <img src="https://picsum.photos/id/237/300/200" alt="">
+                            </div>
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div> 
                 </div>-->
             </div>
         </main>
