@@ -5,7 +5,8 @@ const dati = [
         id: 1 ,
         title: 'Scoperta di una nuova specie di papera di gomma',
         content: 'Scoperta di una nuova specie di papera di gomma.',
-        tags: "'geo' 'tech'",
+        tag1: 'geo',
+        tag2: 'tech',
         author: 'Diana Rossi',
         published: '2023-02-11',
         foto: 'https://picsum.photos/id/910/300/200',
@@ -15,7 +16,8 @@ const dati = [
         id: 2,
         title: 'Esplorando le profondità marine: il mistero degli abissi',
         content: 'Esplorando le profondità marine: il mistero degli abissi',
-        tags: 'viaggi, geo',
+        tag1: 'viaggi',
+        tag2: 'geo',
         author: 'Fabio Mari',
         published: '2023-03-14',
         foto: 'https://picsum.photos/id/210/300/200',
@@ -25,7 +27,8 @@ const dati = [
         id: 3,
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
-        tags: 'cucina',
+        tag1: 'cucina',
+        tag2: '',
         author: 'Marta Bianchi',
         published: '2023-04-20',
         foto: 'https://picsum.photos/id/606/300/200',
@@ -35,7 +38,8 @@ const dati = [
         id: 4,
         title: 'Arte moderna: oltre i confini convenzionali',
         content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
-        tags: 'arte, tech',
+        tag1: 'arte',
+        tag2: 'tech',
         author: 'Gabriele Neri',
         published: '2023-05-29',
         foto: 'https://picsum.photos/id/293/300/200',
@@ -43,9 +47,33 @@ const dati = [
     }
 ]
 
-console.log(dati);
+//TAGS OBJECT
+/*
+const tagsArrayMap = dati.map(dato => dato.tags)
+console.log(tagsArrayMap); // tutti i tags di ogni oggetto in un array
+
+function mapTags(listTagsMap) {
+    listTagsMap.map(el => {
+        console.log({el});
+    })
+}
+
+const objectTags = mapTags(tagsArrayMap)
+*/
+
+//TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
+/*function solotags(datiList) {
+    datiList.forEach(dato => {
+        console.log([dato.tags]);
+    })
+}
+
+const arrayTags = solotags(dati)
+
+console.log(dati);*/
 
 
+//PROVA FUNCTION
 /*dato = generateCard( { //questo serve momentaneamente per vedere in console, visto che ancora non ho definito 'dato'
     id: 4,
     title: 'Arte moderna: oltre i confini convenzionali',
@@ -64,6 +92,7 @@ console.log(dato);*/
  */
 function generateCard(dato) {
 
+
     return     `<div class="card my-3" style="width: 25rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
@@ -78,8 +107,8 @@ function generateCard(dato) {
                         <div class="">
                             <img src="${dato.foto}" alt="${dato.descrizione}">
                         </div>
-                        <a href="#" class="card-link">${dato.tags}</a>
-                        <a href="#" class="card-link">${dato.tags}</a>
+                        <a href="#" class="card-link">${dato.tag1}</a>
+                        <a href="#" class="card-link">${dato.tag2}</a>
                     </div>
                 </div>`
 }
