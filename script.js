@@ -5,10 +5,11 @@ const dati = [
         id: 1 ,
         title: 'Scoperta di una nuova specie di papera di gomma',
         content: 'Scoperta di una nuova specie di papera di gomma.',
-        tags: 'geo, tech',
+        tags: "'geo' 'tech'",
         author: 'Diana Rossi',
         published: '2023-02-11',
-        foto: 'https://picsum.photos/id/237/300/200'
+        foto: 'https://picsum.photos/id/910/300/200',
+        description: 'Fotografía cane'
     },
     {
         id: 2,
@@ -17,6 +18,8 @@ const dati = [
         tags: 'viaggi, geo',
         author: 'Fabio Mari',
         published: '2023-03-14',
+        foto: 'https://picsum.photos/id/210/300/200',
+        description: 'Fotografía cane'
     },
     {
         id: 3,
@@ -25,6 +28,8 @@ const dati = [
         tags: 'cucina',
         author: 'Marta Bianchi',
         published: '2023-04-20',
+        foto: 'https://picsum.photos/id/606/300/200',
+        description: 'Fotografía cane'
     },
     {
         id: 4,
@@ -33,6 +38,8 @@ const dati = [
         tags: 'arte, tech',
         author: 'Gabriele Neri',
         published: '2023-05-29',
+        foto: 'https://picsum.photos/id/293/300/200',
+        description: 'Fotografía cane'
     }
 ]
 
@@ -57,24 +64,25 @@ console.log(dato);*/
  */
 function generateCard(dato) {
 
-    return     `<div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="card-title d-flex"> ${dato.title} </h5>
-                        <div>
-                            <i class="fa-regular fa-bookmark"></i>
+    return     `<div class="card my-3" style="width: 25rem;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title d-flex"> ${dato.title} </h5>
+                            <div>
+                                <i class="fa-regular fa-bookmark"></i>
+                            </div>
                         </div>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
+                        <p class="card-text">${dato.content}</p>
+                        <div class="">
+                            <img src="${dato.foto}" alt="${dato.descrizione}">
+                        </div>
+                        <a href="#" class="card-link">${dato.tags}</a>
+                        <a href="#" class="card-link">${dato.tags}</a>
                     </div>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
-                    <p class="card-text">${dato.content}</p>
-                    <div class="">
-                        <img src="${dato.foto}" alt="${dato.descrizione}">
-                    </div>
-                    <a href="#" class="card-link">${dato.tags}</a>
-                    <a href="#" class="card-link">${dato.tags}</a>
                 </div>`
 }
-
 
 const divCard = document.querySelector('.cardAppend')
 
@@ -94,6 +102,9 @@ function renderCards(datiList, domElement) {
         domElement.insertAdjacentHTML('beforeend', datoEl)
     })
 }
+
+
+
 
 
 
