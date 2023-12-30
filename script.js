@@ -48,8 +48,8 @@ const dati = [
 ]
 
 //TAGS OBJECT
-/*
-const tagsArrayMap = dati.map(dato => dato.tags)
+
+const tagsArrayMap = dati.map(dato => dato.tag1)
 console.log(tagsArrayMap); // tutti i tags di ogni oggetto in un array
 
 function mapTags(listTagsMap) {
@@ -59,7 +59,7 @@ function mapTags(listTagsMap) {
 }
 
 const objectTags = mapTags(tagsArrayMap)
-*/
+
 
 //TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
 /*function solotags(datiList) {
@@ -97,9 +97,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <div>
-                                <i class="fa-regular fa-bookmark"></i>
-                            </div>
+                            <i class="fa-regular fa-bookmark" id="save" type="submit"></i>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -107,8 +105,8 @@ function generateCard(dato) {
                         <div class="">
                             <img src="${dato.foto}" alt="${dato.descrizione}">
                         </div>
-                        <a href="#" class="card-link">${dato.tag1}</a>
-                        <a href="#" class="card-link">${dato.tag2}</a>
+                        <button type="button" class="${dato.tag1 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag1 == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tag1 == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tag1 == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag1}</button>
+                        <button type="button" class="${dato.tag2 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag2 == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag2}</button>
                     </div>
                 </div>`
 }
@@ -132,6 +130,39 @@ function renderCards(datiList, domElement) {
     })
 }
 
+
+
+document.getElementById('tag_type').addEventListener('change',
+/**
+ * filtra i tag della select, cl click di selezione
+ * @param {array} e evento
+ */
+function(e){
+    console.log(e);
+    // log to the consolore the option selected by the user
+
+    console.log(e.target.value);
+    //console.log(this);
+
+    const filteredTags = dati.filter(dato => {
+        return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
+    })
+
+    console.log(filteredTags);
+
+    divCard.innerHTML = ""
+
+    renderCards(filteredTags, divCard)
+})
+
+const salvare = document.getElementById('save')
+
+salvare.addEventListener('click', function(e){
+
+    console.log(this);
+    salvare.className = 'fa-solid fa-bookmark';
+    
+    })
 
 
 
