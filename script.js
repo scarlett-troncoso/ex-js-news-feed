@@ -47,14 +47,16 @@ const dati = [
     }
 ]
 
-//TAGS OBJECT
+
+//TAGS ARRAY
 
 const tagsArrayMap = dati.map(dato => dato.tag1)
 console.log(tagsArrayMap); // tutti i tags di ogni oggetto in un array
 
+//TAGS OBJECT
 function mapTags(listTagsMap) {
     listTagsMap.map(el => {
-        console.log({el});
+        console.log({el}); // ogni tag separatamente come un oggeto ogni uno
     })
 }
 
@@ -85,6 +87,7 @@ console.log(dati);*/
 
 console.log(dato);*/
 
+
 /**
  * Genera markup della card
  * @param {object} dato dato di ogni ogetto dell array
@@ -97,7 +100,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <i class="fa-regular fa-bookmark" id="save" type="submit"></i>
+                            <button class="fa-regular fa-bookmark" id="save"></button>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -130,6 +133,13 @@ function renderCards(datiList, domElement) {
     })
 }
 
+// se quello card é selezionata quindi (se l'icone del button e pieno) allora stampare quella card, forse con la funzione renderCards
+/* QUALCOSA COSI ↓
+function cardSalvata() {
+    if (document.getElementById('save').className === 'fa-solid fa-bookmark') {
+        renderCards(, divCard)
+    }
+}*/
 
 
 document.getElementById('tag_type').addEventListener('change',
@@ -155,17 +165,45 @@ function(e){
     renderCards(filteredTags, divCard)
 })
 
-const salvare = document.getElementById('save')
+/*
+Crea su ogni componente News un pulsante per il salvataggio della News.
+Se clicchiamo l’icona bookmark, cambiamo l’aspetto dell’icona (es. da vuota a piena) e
+aggiungiamo l’id della News nell’array degli id delle news salvate.
+L’id della news è un dato “nascosto” che vorrai inserire in pagina per recuperarlo in seguito
+al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
+In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
+poter dare il giusto aspetto all’icona bookmark.  */
 
-salvare.addEventListener('click', function(e){
+/*
+- che l'icona sia dentro un button, ma l'evento di background sia su licona 
+- aggiungere l'id della news salvata 
+- si se lleva a cabo la funcion entonces estampa esa news (id )
+*/
 
+const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
+console.log(idNews);
+
+const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
+console.log(idNewsMap);
+
+
+document.getElementById('save').addEventListener('click',
+
+function(e){
+    console.log(e);
+   
     console.log(this);
-    salvare.className = 'fa-solid fa-bookmark';
-    
-    })
 
+    const save = document.getElementById('save').className = 'fa-solid fa-bookmark'
 
+    // si se ha seleccionado 'salva' de ese id,(no existe salva de ese id porq ambos no tienen relacion )
+    // entonces stampare esa news che tiene ese id
+    // para cada card si salvare.className === 'fa-solid fa-bookmark' allora: stampa dati.dato.id
+    // dati.dato.id
 
+})
+
+// 
 
 
 
