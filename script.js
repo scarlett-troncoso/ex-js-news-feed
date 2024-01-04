@@ -100,7 +100,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <button class="fa-regular fa-bookmark" id="save" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></button>
+                            <i class="fa-regular fa-bookmark" id="save" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></i>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
