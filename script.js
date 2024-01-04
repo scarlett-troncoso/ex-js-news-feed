@@ -2,7 +2,7 @@ console.log('funziona');
 
 const dati = [
     {
-        id: 1 ,
+        id: '1' ,
         title: 'Scoperta di una nuova specie di papera di gomma',
         content: 'Scoperta di una nuova specie di papera di gomma.',
         tag1: 'geo',
@@ -13,7 +13,7 @@ const dati = [
         description: 'Fotografía cane'
     },
     {
-        id: 2,
+        id: '2',
         title: 'Esplorando le profondità marine: il mistero degli abissi',
         content: 'Esplorando le profondità marine: il mistero degli abissi',
         tag1: 'viaggi',
@@ -24,7 +24,7 @@ const dati = [
         description: 'Fotografía cane'
     },
     {
-        id: 3,
+        id: '3',
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
         tag1: 'cucina',
@@ -35,7 +35,7 @@ const dati = [
         description: 'Fotografía cane'
     },
     {
-        id: 4,
+        id: '4',
         title: 'Arte moderna: oltre i confini convenzionali',
         content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
         tag1: 'arte',
@@ -100,7 +100,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <button class="fa-regular fa-bookmark" id="save"></button>
+                            <button class="fa-regular fa-bookmark" id="save" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></button>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -133,14 +133,6 @@ function renderCards(datiList, domElement) {
     })
 }
 
-// se quello card é selezionata quindi (se l'icone del button e pieno) allora stampare quella card, forse con la funzione renderCards
-/* QUALCOSA COSI ↓
-function cardSalvata() {
-    if (document.getElementById('save').className === 'fa-solid fa-bookmark') {
-        renderCards(, divCard)
-    }
-}*/
-
 
 document.getElementById('tag_type').addEventListener('change',
 /**
@@ -165,6 +157,7 @@ function(e){
     renderCards(filteredTags, divCard)
 })
 
+
 /*
 Crea su ogni componente News un pulsante per il salvataggio della News.
 Se clicchiamo l’icona bookmark, cambiamo l’aspetto dell’icona (es. da vuota a piena) e
@@ -174,36 +167,108 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
 
-/*
-- che l'icona sia dentro un button, ma l'evento di background sia su licona 
-- aggiungere l'id della news salvata 
-- si se lleva a cabo la funcion entonces estampa esa news (id )
-*/
-
-const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
-console.log(idNews);
-
 const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
 console.log(idNewsMap);
 
 
-document.getElementById('save').addEventListener('click',
+const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
+console.log(idNews);
 
-function(e){
-    console.log(e);
-   
-    console.log(this);
+const save = document.getElementById('save')
 
-    const save = document.getElementById('save').className = 'fa-solid fa-bookmark'
+save.addEventListener('click',
+function event(e){
+    
+const sav = save.className = 'fa-solid fa-bookmark'
+console.log(sav);
 
-    // si se ha seleccionado 'salva' de ese id,(no existe salva de ese id porq ambos no tienen relacion )
-    // entonces stampare esa news che tiene ese id
-    // para cada card si salvare.className === 'fa-solid fa-bookmark' allora: stampa dati.dato.id
-    // dati.dato.id
+const g = dati.filter(dato => {
+    
+    return dato.id === save.getAttribute("data-id")
+    })
 
+    console.log(g);
+
+    divCard.innerHTML = ""
+
+    renderCards(g, divCard)
 })
 
-// 
 
+/*
+function eventSave(datiList, domElement) {
+    datiList.forEach(dato => dato.data-id {
+        save.addEventListener('click', function (e){
+   
+            console.log(this);
+        
+            const sav = save.className = 'fa-solid fa-bookmark'
+            console.log(sav);
+        })
+})}*/
+
+
+/*
+function stampaSalvate(cardNew) {
+    const selectCardId = cardNew.getAttribute("data-id");
+    //domElement.insertAdjacentHTML('beforeend', selectCardId)
+    console.log(selectCardId);
+}
+
+stampaSalvate(divCard)*/
+// decir: la card que tiene el button con data-id
+// 2 COSAS QUE HACER: QUE SE PUEDAN SELECCIONAR VARIOS Y QUE SE IMPRIMAN LOS SELECCIONADOS
+/*
+function renderCards(datiList, domElement) {
+    datiList.forEach(dato => {
+
+    const datoEl = generateCard(dato)
+    console.log(datoEl);
+
+    domElement.insertAdjacentHTML('beforeend', datoEl)
+})
+}*/
+
+
+// se quello card é selezionata quindi (se l'icone del button e pieno) allora stampare quella card, forse con la funzione renderCards
+// QUALCOSA COSI ↓
+
+/*
+function cardSalvata(domElIcon, domElContainer ) {
+    if (domElIcon.className === 'fa-solid fa-bookmark') {
+        renderCards(domElIcon, domElContainer)
+    }
+}*/
+
+
+
+
+/* RAGGIONAMENTO FATTO DIRETTEMANETE IN RIGA CON OPERATORI TERNARI
+// Aggiungere data-id a ogni card new dipendendo dal id del dato
+function attributeDataId() {
+    if (idNews === 1) {
+        save.setAttribute('data-id', "1")
+    } else if (idNews === 2) {
+        save.setAttribute('data-id', "2")
+    } else if (idNews === 3) {
+        save.setAttribute('data-id', "3")
+    } else {
+        save.setAttribute('data-id', "4")
+    }
+}
+
+// generare card con la logica del data-id
+function dataId2 (datiList, domElement) {
+    datiList.forEach(dato => {
+
+    const datoEl = generateCard(dato)
+    console.log(datoEl);
+
+    const j = attributeDataId(datoEl)
+    console.log(j);
+
+    domElement.insertAdjacentHTML('beforeend', datoEl)
+})
+}*/
 
 
