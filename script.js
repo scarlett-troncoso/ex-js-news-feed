@@ -9,7 +9,7 @@ const dati = [
         tag2: 'tech',
         author: 'Diana Rossi',
         published: '2023-02-11',
-        foto: 'https://picsum.photos/id/910/300/200',
+        foto: 'rubber-duck.jpg',
         description: 'Fotografía cane'
     },
     {
@@ -20,7 +20,7 @@ const dati = [
         tag2: 'geo',
         author: 'Fabio Mari',
         published: '2023-03-14',
-        foto: 'https://picsum.photos/id/210/300/200',
+        foto: 'deep-sea.jpg',
         description: 'Fotografía cane'
     },
     {
@@ -31,7 +31,7 @@ const dati = [
         tag2: '',
         author: 'Marta Bianchi',
         published: '2023-04-20',
-        foto: 'https://picsum.photos/id/606/300/200',
+        foto: 'kitchen-food.jpg',
         description: 'Fotografía cane'
     },
     {
@@ -42,7 +42,7 @@ const dati = [
         tag2: 'tech',
         author: 'Gabriele Neri',
         published: '2023-05-29',
-        foto: 'https://picsum.photos/id/293/300/200',
+        foto: 'modern-art.jpg',
         description: 'Fotografía cane'
     }
 ]
@@ -87,7 +87,6 @@ console.log(dati);*/
 
 console.log(dato);*/
 
-
 /**
  * Genera markup della card
  * @param {object} dato dato di ogni ogetto dell array
@@ -106,7 +105,7 @@ function generateCard(dato) {
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
                         <p class="card-text">${dato.content}</p>
                         <div class="">
-                            <img src="${dato.foto}" alt="${dato.descrizione}">
+                            <img src="../images/${dato.foto}" alt="${dato.descrizione}">
                         </div>
                         <button type="button" class="${dato.tag1 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag1 == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tag1 == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tag1 == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag1}</button>
                         <button type="button" class="${dato.tag2 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag2 == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag2}</button>
@@ -167,19 +166,13 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
 
-const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
-console.log(idNewsMap);
-
-
-const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
-console.log(idNews);
 
 const save = document.getElementById('save')
 
-save.addEventListener('click',
-function event(e){
+
+save.addEventListener('click', function (e){
     
-const sav = save.className = 'fa-solid fa-bookmark'
+const sav = save.classList = 'fa-solid fa-bookmark'
 console.log(sav);
 
 const g = dati.filter(dato => {
@@ -193,6 +186,44 @@ const g = dati.filter(dato => {
 
     renderCards(g, divCard)
 })
+
+
+
+//const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
+//console.log(idNewsMap);
+
+
+//const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
+//console.log(idNews);
+/* PROVA FUNCTION
+const dato = dati.map(dato => dato)
+
+ogniEv(dato)
+
+function ogniEv(params) { // questo ha fatto che si creino 4 volte levento, ma sempre del id 1
+    dati.forEach(dato => {
+        return ev(dato)
+    })
+}
+
+function ev() {
+    save.addEventListener('click', function (e){
+    
+        const sav = save.className = 'fa-solid fa-bookmark'
+        console.log(sav);
+        
+        const g = dati.filter(dato => {
+            
+            return dato.id === save.getAttribute("data-id")
+            })
+        
+            console.log(g);
+        
+            divCard.innerHTML = ""
+        
+            renderCards(g, divCard)
+        })
+}*/
 
 
 /*
