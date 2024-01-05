@@ -9,8 +9,7 @@ const dati = [
         tag2: 'tech',
         author: 'Diana Rossi',
         published: '2023-02-11',
-        foto: 'rubber-duck.jpg',
-        description: 'Fotografía cane'
+        foto: 'rubber-duck',
     },
     {
         id: '2',
@@ -20,8 +19,7 @@ const dati = [
         tag2: 'geo',
         author: 'Fabio Mari',
         published: '2023-03-14',
-        foto: 'deep-sea.jpg',
-        description: 'Fotografía cane'
+        foto: 'deep-sea',
     },
     {
         id: '3',
@@ -31,8 +29,7 @@ const dati = [
         tag2: '',
         author: 'Marta Bianchi',
         published: '2023-04-20',
-        foto: 'kitchen-food.jpg',
-        description: 'Fotografía cane'
+        foto: 'kitchen-food',
     },
     {
         id: '4',
@@ -42,8 +39,7 @@ const dati = [
         tag2: 'tech',
         author: 'Gabriele Neri',
         published: '2023-05-29',
-        foto: 'modern-art.jpg',
-        description: 'Fotografía cane'
+        foto: 'modern-art',
     }
 ]
 
@@ -63,30 +59,6 @@ function mapTags(listTagsMap) {
 const objectTags = mapTags(tagsArrayMap)
 
 
-//TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
-/*function solotags(datiList) {
-    datiList.forEach(dato => {
-        console.log([dato.tags]);
-    })
-}
-
-const arrayTags = solotags(dati)
-
-console.log(dati);*/
-
-
-//PROVA FUNCTION
-/*dato = generateCard( { //questo serve momentaneamente per vedere in console, visto che ancora non ho definito 'dato'
-    id: 4,
-    title: 'Arte moderna: oltre i confini convenzionali',
-    content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
-    tags: 'arte, tech',
-    author: 'Gabriele Neri',
-    published: '2023-05-29',
-})
-
-console.log(dato);*/
-
 /**
  * Genera markup della card
  * @param {object} dato dato di ogni ogetto dell array
@@ -95,7 +67,7 @@ console.log(dato);*/
 function generateCard(dato) {
 
 
-    return     `<div class="card my-3 m-auto" style="width: 40rem;">
+    return     `<div class="card my-3 m-auto" style="width: 42rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
@@ -105,7 +77,7 @@ function generateCard(dato) {
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
                         <p class="card-text">${dato.content}</p>
                         <div class="">
-                            <img src="../images/${dato.foto}" alt="${dato.descrizione}">
+                            <img src="./images/${dato.foto}.jpg" alt="${dato.foto}-photography">
                         </div>
                         <button type="button" class="${dato.tag1 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag1 == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tag1 == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tag1 == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag1}</button>
                         <button type="button" class="${dato.tag2 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag2 == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag2}</button>
@@ -132,6 +104,14 @@ function renderCards(datiList, domElement) {
     })
 }
 
+/*
+Step 3: filtri
+- Crea l’interfaccia dei filtri utilizzando tag di input appropriati. Recupera in JavaScript i valori
+selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio gli elementi.
+- I filtri richiesti sono:
+    ● filtro per singolo tag
+    ● filtro per news salvate
+*/
 
 document.getElementById('tag_type').addEventListener('change',
 /**
@@ -158,12 +138,15 @@ function(e){
 
 
 /*
-Crea su ogni componente News un pulsante per il salvataggio della News.
-Se clicchiamo l’icona bookmark, cambiamo l’aspetto dell’icona (es. da vuota a piena) e
+- Crea su ogni componente News un pulsante per il salvataggio della News.
+
+- Se clicchiamo l’icona bookmark, cambiamo l’aspetto dell’icona (es. da vuota a piena) e
 aggiungiamo l’id della News nell’array degli id delle news salvate.
-L’id della news è un dato “nascosto” che vorrai inserire in pagina per recuperarlo in seguito
+
+- L’id della news è un dato “nascosto” che vorrai inserire in pagina per recuperarlo in seguito
 al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
-In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
+
+- In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
 
 
@@ -303,3 +286,28 @@ function dataId2 (datiList, domElement) {
 }*/
 
 
+
+
+//TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
+/*function solotags(datiList) {
+    datiList.forEach(dato => {
+        console.log([dato.tags]);
+    })
+}
+
+const arrayTags = solotags(dati)
+
+console.log(dati);*/
+
+
+//PROVA FUNCTION
+/*dato = generateCard( { //questo serve momentaneamente per vedere in console, visto che ancora non ho definito 'dato'
+    id: 4,
+    title: 'Arte moderna: oltre i confini convenzionali',
+    content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
+    tags: 'arte, tech',
+    author: 'Gabriele Neri',
+    published: '2023-05-29',
+})
+
+console.log(dato);*/
