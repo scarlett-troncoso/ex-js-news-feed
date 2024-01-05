@@ -41,19 +41,19 @@ const dati = [
         published: '2023-05-29',
         foto: 'modern-art',
     }
-]
+];
 
 
 //TAGS ARRAY
 
-const tagsArrayMap = dati.map(dato => dato.tag1)
+const tagsArrayMap = dati.map(dato => dato.tag1);
 console.log(tagsArrayMap); // tutti i tags di ogni oggetto in un array
 
 //TAGS OBJECT
 function mapTags(listTagsMap) {
     listTagsMap.map(el => {
         console.log({el}); // ogni tag separatamente come un oggeto ogni uno
-    })
+    });
 }
 
 const objectTags = mapTags(tagsArrayMap)
@@ -71,7 +71,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <i class="fa-regular fa-bookmark" id="save" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></i>
+                            <i class="fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></i>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -82,12 +82,12 @@ function generateCard(dato) {
                         <button type="button" class="${dato.tag1 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag1 == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tag1 == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tag1 == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag1}</button>
                         <button type="button" class="${dato.tag2 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag2 == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag2}</button>
                     </div>
-                </div>`
+                </div>`;
 }
 
-const divCard = document.querySelector('.cardAppend')
+const divCard = document.querySelector('.cardAppend');
 
-renderCards(dati, divCard) //quindi la funzione funzionera con dati inziche datiList e divCard anziche domElement
+renderCards(dati, divCard); //quindi la funzione funzionera con dati inziche datiList e divCard anziche domElement
 
 /**
  * stampa la lista dei dati nelle card 
@@ -95,13 +95,12 @@ renderCards(dati, divCard) //quindi la funzione funzionera con dati inziche dati
  * @param {object} domElement dove mettere le card
  */
 function renderCards(datiList, domElement) {
-        datiList.forEach(dato => {
-
-        const datoEl = generateCard(dato)
+    datiList.forEach(dato => {
+        const datoEl = generateCard(dato);
         console.log(datoEl);
-    
-        domElement.insertAdjacentHTML('beforeend', datoEl)
-    })
+        domElement.insertAdjacentHTML('beforeend', datoEl);
+        insertOnClickOnTag(dato);
+    });
 }
 
 /*
@@ -148,29 +147,33 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 
 - In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
+function insertOnClickOnTag(dato) {
+//dati.forEach(dato => {
+    const save = document.getElementById('save-' + dato.id)
 
+    save.addEventListener('click', function (e) {
+        console.log('clicked');
+        
+        const sav = save.classList;
+        //save.classList = sav.contains("fa-regular") ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'; //questo per fare deseleziona
+        save.classList = 'fa-solid fa-bookmark';
+        if (datiSaved.filter(ds => ds.id === dato.id).length === 0) { // se datisaved(arrayvuoto) filtrare,(id di ogni cosa del array = id del dato).larghezzalettere = 0(se non ce niente)
+            datiSaved.push(dato); //allora mettere il dato nell array vuoto
+        }
 
-const save = document.getElementById('save')
+        const g = dati.filter(dato => {
+            return dato.id === save.getAttribute("data-id");
+        });
 
+        console.log(g);
 
-save.addEventListener('click', function (e){
-    
-const sav = save.classList = 'fa-solid fa-bookmark'
-console.log(sav);
+        //divCard.innerHTML = "";
 
-const g = dati.filter(dato => {
-    
-    return dato.id === save.getAttribute("data-id")
-    })
+        //renderCards(g, divCard);
+    });
+}//);
 
-    console.log(g);
-
-    divCard.innerHTML = ""
-
-    renderCards(g, divCard)
-})
-
-
+let datiSaved = []
 
 //const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
 //console.log(idNewsMap);
