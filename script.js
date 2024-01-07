@@ -71,7 +71,7 @@ function generateCard(dato) {
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <i class="fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id == 1 ? 1 : dato.id == 2 ? 2 : dato.id == 3 ? 3 : 4}"></i>
+                            <i class="fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id}"></i>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -84,6 +84,7 @@ function generateCard(dato) {
                     </div>
                 </div>`;
 }
+
 
 const divCard = document.querySelector('.cardAppend');
 
@@ -112,28 +113,35 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
     ● filtro per news salvate
 */
 
-document.getElementById('tag_type').addEventListener('change',
-/**
- * filtra i tag della select, cl click di selezione
- * @param {array} e evento
- */
-function(e){
-    console.log(e);
-    // log to the consolore the option selected by the user
+    document.getElementById('tag_type').addEventListener('change',
+    /**
+     * filtra i tag della select, cl click di selezione
+     * @param {array} e evento
+     */
+    function(e){
+        console.log(e);
+        // log to the consolore the option selected by the user
 
-    console.log(e.target.value);
-    //console.log(this);
+        console.log(e.target.value);
+        //console.log(this);
 
-    const filteredTags = dati.filter(dato => {
-        return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
+        const filteredTags = dati.filter(dato => {
+            return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
+        })
+/*
+        if (filteredTags.forEach(tagfil => tagfil.id === datiSaved.id)) {
+            document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark';
+        } else {
+            document.getElementById('save-' + datoSalvato.id).classList = 'fa-regular fa-bookmark';
+        }*/
+
+        console.log(filteredTags);
+
+        divCard.innerHTML = ""
+
+        renderCards(filteredTags, divCard)
     })
 
-    console.log(filteredTags);
-
-    divCard.innerHTML = ""
-
-    renderCards(filteredTags, divCard)
-})
 
 
 /*
@@ -147,8 +155,10 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 
 - In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
+
+
 function insertOnClickOnTag(dato) {
-//dati.forEach(dato => {
+
     const save = document.getElementById('save-' + dato.id)
 
     save.addEventListener('click', function (e) {
@@ -157,23 +167,43 @@ function insertOnClickOnTag(dato) {
         const sav = save.classList;
         //save.classList = sav.contains("fa-regular") ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'; //questo per fare deseleziona
         save.classList = 'fa-solid fa-bookmark';
-        if (datiSaved.filter(ds => ds.id === dato.id).length === 0) { // se datisaved(arrayvuoto) filtrare,(id di ogni cosa del array = id del dato).larghezzalettere = 0(se non ce niente)
+        /*if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id).length === 0) { // se datisaved(arrayvuoto) filtrare,(id di ogni cosa del array = id del dato).larghezzalettere = 0(se non ce niente)
             datiSaved.push(dato); //allora mettere il dato nell array vuoto
-        }
+        }*/
 
-        const g = dati.filter(dato => {
+        if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id)) {
+        datiSaved.push(dato)
+
+    }
+
+        /*const datiSavedList = dati.filter(dato => {
             return dato.id === save.getAttribute("data-id");
         });
 
-        console.log(g);
-
-        //divCard.innerHTML = "";
-
-        //renderCards(g, divCard);
+        console.log(datiSavedList);*/
     });
 }//);
 
-let datiSaved = []
+
+const datiSaved = []
+console.log(datiSaved);
+
+const showSave = document.getElementById('showSaved')
+
+showsave.addEventListener('click', function (e) {
+    divCard.innerHTML = "";
+
+    if (showsave.checked) {
+        renderCards(datiSaved, divCard);
+        datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
+        if (datiSaved.length === 0) {
+            divCard.innerHTML = "ANCORA NON HAI SALVATO NIENTE";
+        }
+    } else {
+        renderCards(dati, divCard)
+        };
+    })
+
 
 //const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
 //console.log(idNewsMap);
@@ -247,50 +277,6 @@ function renderCards(datiList, domElement) {
 }*/
 
 
-// se quello card é selezionata quindi (se l'icone del button e pieno) allora stampare quella card, forse con la funzione renderCards
-// QUALCOSA COSI ↓
-
-/*
-function cardSalvata(domElIcon, domElContainer ) {
-    if (domElIcon.className === 'fa-solid fa-bookmark') {
-        renderCards(domElIcon, domElContainer)
-    }
-}*/
-
-
-
-
-/* RAGGIONAMENTO FATTO DIRETTEMANETE IN RIGA CON OPERATORI TERNARI
-// Aggiungere data-id a ogni card new dipendendo dal id del dato
-function attributeDataId() {
-    if (idNews === 1) {
-        save.setAttribute('data-id', "1")
-    } else if (idNews === 2) {
-        save.setAttribute('data-id', "2")
-    } else if (idNews === 3) {
-        save.setAttribute('data-id', "3")
-    } else {
-        save.setAttribute('data-id', "4")
-    }
-}
-
-// generare card con la logica del data-id
-function dataId2 (datiList, domElement) {
-    datiList.forEach(dato => {
-
-    const datoEl = generateCard(dato)
-    console.log(datoEl);
-
-    const j = attributeDataId(datoEl)
-    console.log(j);
-
-    domElement.insertAdjacentHTML('beforeend', datoEl)
-})
-}*/
-
-
-
-
 //TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
 /*function solotags(datiList) {
     datiList.forEach(dato => {
@@ -301,16 +287,3 @@ function dataId2 (datiList, domElement) {
 const arrayTags = solotags(dati)
 
 console.log(dati);*/
-
-
-//PROVA FUNCTION
-/*dato = generateCard( { //questo serve momentaneamente per vedere in console, visto che ancora non ho definito 'dato'
-    id: 4,
-    title: 'Arte moderna: oltre i confini convenzionali',
-    content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
-    tags: 'arte, tech',
-    author: 'Gabriele Neri',
-    published: '2023-05-29',
-})
-
-console.log(dato);*/
