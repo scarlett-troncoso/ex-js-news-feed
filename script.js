@@ -58,6 +58,8 @@ function mapTags(listTagsMap) {
 
 const objectTags = mapTags(tagsArrayMap)
 
+const datiSaved = []
+console.log(datiSaved);
 
 /**
  * Genera markup della card
@@ -66,12 +68,11 @@ const objectTags = mapTags(tagsArrayMap)
  */
 function generateCard(dato) {
 
-
     return     `<div class="card my-3 m-auto" style="width: 42rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <i class="fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id}"></i>
+                            <i class= "fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id}"></i>
                         </div>
                         <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
                         <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
@@ -88,6 +89,8 @@ function generateCard(dato) {
 
 const divCard = document.querySelector('.cardAppend');
 
+
+
 renderCards(dati, divCard); //quindi la funzione funzionera con dati inziche datiList e divCard anziche domElement
 
 /**
@@ -101,8 +104,13 @@ function renderCards(datiList, domElement) {
         console.log(datoEl);
         domElement.insertAdjacentHTML('beforeend', datoEl);
         insertOnClickOnTag(dato);
+        //savedElBookmarkSolid(dati)     
     });
+
 }
+
+
+
 
 /*
 Step 3: filtri
@@ -126,16 +134,11 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
         //console.log(this);
 
         const filteredTags = dati.filter(dato => {
+
             return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
         })
-/*
-        if (filteredTags.forEach(tagfil => tagfil.id === datiSaved.id)) {
-            document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark';
-        } else {
-            document.getElementById('save-' + datoSalvato.id).classList = 'fa-regular fa-bookmark';
-        }*/
 
-        console.log(filteredTags);
+        console.log(filteredTags)
 
         divCard.innerHTML = ""
 
@@ -176,17 +179,11 @@ function insertOnClickOnTag(dato) {
 
     }
 
-        /*const datiSavedList = dati.filter(dato => {
-            return dato.id === save.getAttribute("data-id");
-        });
-
-        console.log(datiSavedList);*/
     });
 }//);
 
 
-const datiSaved = []
-console.log(datiSaved);
+
 
 const showSave = document.getElementById('showSaved')
 
@@ -204,78 +201,31 @@ showsave.addEventListener('click', function (e) {
         };
     })
 
+/*
+function savedElBookmarkSolid(dati) {
 
+    if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id)) {
+        datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
+    } else {
+        dati.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-regular fa-bookmark');
+    }*/
+
+   /* const onlyDatoId = dati.map(dato => dato.id)
+    console.log(onlyDatoId);
+
+    const onlyDatoSavedId = datiSaved.map(datoSav => datoSav.id)
+    console.log(onlyDatoSavedId);
+
+    onlyDatoId.forEach(onlyID => {
+        if (onlyID === onlyDatoSavedId.forEach(onlySavId => onlySavId)) {
+            this.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark') 
+        }*/
+    
+
+
+//savedElBookmarkSolid(dati)
 //const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
 //console.log(idNewsMap);
-
-
-//const idNews = dati.filter(dato => dato.id) // ARRAY CON oggeti di TUTTI ID
-//console.log(idNews);
-/* PROVA FUNCTION
-const dato = dati.map(dato => dato)
-
-ogniEv(dato)
-
-function ogniEv(params) { // questo ha fatto che si creino 4 volte levento, ma sempre del id 1
-    dati.forEach(dato => {
-        return ev(dato)
-    })
-}
-
-function ev() {
-    save.addEventListener('click', function (e){
-    
-        const sav = save.className = 'fa-solid fa-bookmark'
-        console.log(sav);
-        
-        const g = dati.filter(dato => {
-            
-            return dato.id === save.getAttribute("data-id")
-            })
-        
-            console.log(g);
-        
-            divCard.innerHTML = ""
-        
-            renderCards(g, divCard)
-        })
-}*/
-
-
-/*
-function eventSave(datiList, domElement) {
-    datiList.forEach(dato => dato.data-id {
-        save.addEventListener('click', function (e){
-   
-            console.log(this);
-        
-            const sav = save.className = 'fa-solid fa-bookmark'
-            console.log(sav);
-        })
-})}*/
-
-
-/*
-function stampaSalvate(cardNew) {
-    const selectCardId = cardNew.getAttribute("data-id");
-    //domElement.insertAdjacentHTML('beforeend', selectCardId)
-    console.log(selectCardId);
-}
-
-stampaSalvate(divCard)*/
-// decir: la card que tiene el button con data-id
-// 2 COSAS QUE HACER: QUE SE PUEDAN SELECCIONAR VARIOS Y QUE SE IMPRIMAN LOS SELECCIONADOS
-/*
-function renderCards(datiList, domElement) {
-    datiList.forEach(dato => {
-
-    const datoEl = generateCard(dato)
-    console.log(datoEl);
-
-    domElement.insertAdjacentHTML('beforeend', datoEl)
-})
-}*/
-
 
 //TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
 /*function solotags(datiList) {
