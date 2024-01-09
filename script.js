@@ -43,21 +43,6 @@ const dati = [
     }
 ];
 
-
-//TAGS ARRAY
-
-const tagsArrayMap = dati.map(dato => dato.tag1);
-console.log(tagsArrayMap); // tutti i tags di ogni oggetto in un array
-
-//TAGS OBJECT
-function mapTags(listTagsMap) {
-    listTagsMap.map(el => {
-        console.log({el}); // ogni tag separatamente come un oggeto ogni uno
-    });
-}
-
-const objectTags = mapTags(tagsArrayMap)
-
 const datiSaved = []
 console.log(datiSaved);
 
@@ -86,12 +71,9 @@ function generateCard(dato) {
                 </div>`;
 }
 
-
 const divCard = document.querySelector('.cardAppend');
 
-
-
-renderCards(dati, divCard); //quindi la funzione funzionera con dati inziche datiList e divCard anziche domElement
+renderCards(dati, divCard);
 
 /**
  * stampa la lista dei dati nelle card 
@@ -103,14 +85,9 @@ function renderCards(datiList, domElement) {
         const datoEl = generateCard(dato);
         console.log(datoEl);
         domElement.insertAdjacentHTML('beforeend', datoEl);
-        insertOnClickOnTag(dato);
-        //savedElBookmarkSolid(dati)     
+        insertOnClickOnTag(dato);    
     });
-
 }
-
-
-
 
 /*
 Step 3: filtri
@@ -121,21 +98,21 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
     ● filtro per news salvate
 */
 
-    document.getElementById('tag_type').addEventListener('change',
+document.getElementById('tag_type').addEventListener('change',
     /**
-     * filtra i tag della select, cl click di selezione
+     * filtra i tag della select, al click di selezione
      * @param {array} e evento
      */
     function(e){
-        console.log(e);
-        // log to the consolore the option selected by the user
-
         console.log(e.target.value);
-        //console.log(this);
 
         const filteredTags = dati.filter(dato => {
 
-            return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
+          return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
+
+          // return dato.tag1[0] === e.target.value || dato.tag1[1] === e.target.value || e.target.value === 'all'
+
+
         })
 
         console.log(filteredTags)
@@ -143,9 +120,21 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
         divCard.innerHTML = ""
 
         renderCards(filteredTags, divCard)
+
+        for (let i = 0; i < datiSaved.length; i++)  {
+            const list = datiSaved [i];
+            console.log(list);
+        
+            for  (let index = 0; index < filteredTags.length; index++){
+                const element = filteredTags[index];
+                console.log(element);
+                
+                if (list.id === element.id) {
+                    datiSaved.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-solid fa-bookmark');
+                    }
+        }} 
+
     })
-
-
 
 /*
 - Crea su ogni componente News un pulsante per il salvataggio della News.
@@ -159,7 +148,10 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 - In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
 poter dare il giusto aspetto all’icona bookmark.  */
 
-
+/**
+ * Al click su bookmark cambia colore e salva la news, e la aggiunge nell’array degli id delle news salvate
+ * @param {array} dato 
+ */
 function insertOnClickOnTag(dato) {
 
     const save = document.getElementById('save-' + dato.id)
@@ -170,20 +162,12 @@ function insertOnClickOnTag(dato) {
         const sav = save.classList;
         //save.classList = sav.contains("fa-regular") ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'; //questo per fare deseleziona
         save.classList = 'fa-solid fa-bookmark';
-        /*if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id).length === 0) { // se datisaved(arrayvuoto) filtrare,(id di ogni cosa del array = id del dato).larghezzalettere = 0(se non ce niente)
-            datiSaved.push(dato); //allora mettere il dato nell array vuoto
-        }*/
 
         if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id)) {
         datiSaved.push(dato)
-
     }
-
     });
-}//);
-
-
-
+}
 
 const showSave = document.getElementById('showSaved')
 
@@ -196,44 +180,11 @@ showsave.addEventListener('click', function (e) {
         if (datiSaved.length === 0) {
             divCard.innerHTML = "ANCORA NON HAI SALVATO NIENTE";
         }
-    } else {
+    } else if (!showsave.checked){
         renderCards(dati, divCard)
-        };
-    })
-
-/*
-function savedElBookmarkSolid(dati) {
-
-    if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id)) {
         datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
-    } else {
-        dati.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-regular fa-bookmark');
-    }*/
-
-   /* const onlyDatoId = dati.map(dato => dato.id)
-    console.log(onlyDatoId);
-
-    const onlyDatoSavedId = datiSaved.map(datoSav => datoSav.id)
-    console.log(onlyDatoSavedId);
-
-    onlyDatoId.forEach(onlyID => {
-        if (onlyID === onlyDatoSavedId.forEach(onlySavId => onlySavId)) {
-            this.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark') 
-        }*/
-    
-
-
-//savedElBookmarkSolid(dati)
-//const idNewsMap = dati.map(dato => dato.id) // ARRAY CON TUTTI ID
-//console.log(idNewsMap);
-
-//TAGS ARRAY ↓↓↓↓↓↓↓↓↓↓
-/*function solotags(datiList) {
-    datiList.forEach(dato => {
-        console.log([dato.tags]);
+        } else {
+            renderCards(dati, divCard)
+            }
     })
-}
 
-const arrayTags = solotags(dati)
-
-console.log(dati);*/
