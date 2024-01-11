@@ -162,18 +162,20 @@ function insertOnClickOnTag(dato) {
     });
 }
 
-const showSave = document.getElementById('showSaved')
+const showSave = document.getElementById('showsave')
 
-showsave.addEventListener('click', function (e) {
+showSave.addEventListener('click', function (e) {
     divCard.innerHTML = "";
 
-    if (showsave.checked) {
+    if (showSave.checked) {
         renderCards(datiSaved, divCard);
         datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
         if (datiSaved.length === 0) {
-            divCard.innerHTML = "ANCORA NON HAI SALVATO NIENTE";
+            divCard.innerHTML = `<div class="noNews">
+                                    <h1 class="text-center my-3">You haven't saved anything yet</h1>
+                                </div>`;
         }
-    } else if (!showsave.checked){
+    } else if (!showSave.checked){
         renderCards(dati, divCard)
         datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
         } else {
