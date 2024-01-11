@@ -5,8 +5,7 @@ const dati = [
         id: '1' ,
         title: 'Scoperta di una nuova specie di papera di gomma',
         content: 'Scoperta di una nuova specie di papera di gomma.',
-        tag1: 'geo',
-        tag2: 'tech',
+        tags: ['geo', 'tech'],
         author: 'Diana Rossi',
         published: '2023-02-11',
         foto: 'rubber-duck',
@@ -15,8 +14,7 @@ const dati = [
         id: '2',
         title: 'Esplorando le profondità marine: il mistero degli abissi',
         content: 'Esplorando le profondità marine: il mistero degli abissi',
-        tag1: 'viaggi',
-        tag2: 'geo',
+        tags: ['viaggi', 'geo'],
         author: 'Fabio Mari',
         published: '2023-03-14',
         foto: 'deep-sea',
@@ -25,8 +23,7 @@ const dati = [
         id: '3',
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
-        tag1: 'cucina',
-        tag2: '',
+        tags: ['cucina', ''],
         author: 'Marta Bianchi',
         published: '2023-04-20',
         foto: 'kitchen-food',
@@ -35,8 +32,7 @@ const dati = [
         id: '4',
         title: 'Arte moderna: oltre i confini convenzionali',
         content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
-        tag1: 'arte',
-        tag2: 'tech',
+        tags: ['arte', 'tech'],
         author: 'Gabriele Neri',
         published: '2023-05-29',
         foto: 'modern-art',
@@ -65,8 +61,8 @@ function generateCard(dato) {
                         <div class="">
                             <img src="./images/${dato.foto}.jpg" alt="${dato.foto}-photography">
                         </div>
-                        <button type="button" class="${dato.tag1 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag1 == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tag1 == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tag1 == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag1}</button>
-                        <button type="button" class="${dato.tag2 == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tag2 == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tag2}</button>
+                        <button type="button" class="${dato.tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tags[0]}</button>
+                        <button type="button" class="${dato.tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tags[1]}</button>
                     </div>
                 </div>`;
 }
@@ -108,10 +104,7 @@ document.getElementById('tag_type').addEventListener('change',
 
         const filteredTags = dati.filter(dato => {
 
-          return dato.tag1 === e.target.value  || dato.tag2 === e.target.value || e.target.value === 'all'
-
-          // return dato.tag1[0] === e.target.value || dato.tag1[1] === e.target.value || e.target.value === 'all'
-
+          return dato.tags[0] === e.target.value  || dato.tags[1] === e.target.value || e.target.value === 'all'
 
         })
 
@@ -121,18 +114,18 @@ document.getElementById('tag_type').addEventListener('change',
 
         renderCards(filteredTags, divCard)
 
-        for (let i = 0; i < datiSaved.length; i++)  {
-            const list = datiSaved [i];
-            console.log(list);
-        
-            for  (let index = 0; index < filteredTags.length; index++){
-                const element = filteredTags[index];
-                console.log(element);
-                
-                if (list.id === element.id) {
-                    datiSaved.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-solid fa-bookmark');
-                    }
-        }} 
+
+        const list =  datiSaved.forEach(dat => {
+            dat.id 
+        })
+
+        const element = filteredTags.forEach(filt =>  {
+            filt.id
+        })
+
+        if (list === element) {
+            datiSaved.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-solid fa-bookmark');
+        }
 
     })
 
