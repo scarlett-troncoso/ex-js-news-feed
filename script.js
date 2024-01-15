@@ -42,8 +42,10 @@ const dati = [
     }
 ];
 
-const datiSaved = []
+const datiSaved = [];
 console.log(datiSaved);
+
+const tags = ['geo', 'tech', 'viaggi', 'cucina', 'arte'] ;
 
 
 /*
@@ -55,6 +57,16 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
     ● filtro per news salvate
 */
 
+/**
+ * Verifica se é incluso nelle array tags o no
+ * @param {array} arrayDati dati
+ * @param {string} tag 
+ * @returns se non é uguale a tag ci da tutti gli array dei dati, altrimenti ci da i dati di cui tag é incluso nelle array tags
+ */
+function filterByTag(arrayDati, tag) {
+    if (!tag) return arrayDati;
+    return arrayDati.filter((dato) => dato.tags.includes(tag));
+}
 
 idSelect.addEventListener('change',
     /**
