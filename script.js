@@ -1,4 +1,4 @@
-console.log('funziona');
+
 const divCard = document.querySelector('.cardAppend');
 const showSave = document.getElementById('showsave');
 const idSelect = document.getElementById('tag_type');
@@ -118,7 +118,7 @@ function insertOnClickOnTag() {
  */
 function noNews() {
     divCard.innerHTML = `<div class="noNews">
-                            <h1 class="text-center my-3">You haven't saved anything yet</h1>
+                            <h1 class="text-center my-3">No news</h1>
                         </div>`;
 }
 
@@ -154,13 +154,9 @@ function renderCards(dati) {
                 }); 
     }
 
-/*
-showSave.addEventListener('click', function (e) {
-    })
 
-idSelect.addEventListener('change', function(e){      
-    })*/
-
+idSelect.addEventListener('change', applyFilters)
+showSave.addEventListener('change', applyFilters)
 
 renderCards(dati);
 insertOnClickOnTag()
