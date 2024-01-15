@@ -45,15 +45,22 @@ const dati = [
 const datiSaved = [];
 console.log(datiSaved);
 
+// Inserire tutti i tag in un array
 const tagOfMap = []
-dati.map(dato => {
-    tagOfMap.push(dato.tags[0], dato.tags[1])
-});
-console.log(tagOfMap);
-
-const tags = [...new Set(tagOfMap)]; 
-
+dati.map(dato => tagOfMap.push(dato.tags[0], dato.tags[1]));
+const tags = [...new Set(tagOfMap)];
 console.log(tags); 
+
+
+/**
+ * Cambia il format della data a dd-mm-yyyy
+ * @param {published} string 
+ * @returns data in formato dd-mm-yyyy
+ */
+function convertDateFormat(string) {
+    const dataFormat = string.split('-').reverse().join('-');
+    return dataFormat;
+}
 
 
 // verifica se un id é incluso in datiSaved 
@@ -150,7 +157,7 @@ function renderCards(dati) {
                                         <i class= "${isSaved(dato) ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'}" id="save" data-id="${id}"></i>
                                     </div>
                                     <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${convertDateFormat(published)}</h6>
                                     <p class="card-text">${content}</p>
                                     <div class="">
                                         <img src="./images/${foto}.jpg" alt="${foto}-photography">
