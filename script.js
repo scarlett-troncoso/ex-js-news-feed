@@ -26,7 +26,7 @@ const dati = [
         id: 3,
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
-        tags: ['cucina', ''],
+        tags: ['cucina'],
         author: 'Marta Bianchi',
         published: '2023-04-20',
         foto: 'kitchen-food',
@@ -45,7 +45,16 @@ const dati = [
 const datiSaved = [];
 console.log(datiSaved);
 
-const tags = ['geo', 'tech', 'viaggi', 'cucina', 'arte'] ;
+const tagOfMap = []
+dati.map(dato => {
+    tagOfMap.push(dato.tags[0], dato.tags[1])
+});
+console.log(tagOfMap);
+
+const tags = [...new Set(tagOfMap)]; 
+
+console.log(tags); 
+
 
 // verifica se un id é incluso in datiSaved 
 /**
@@ -111,7 +120,6 @@ function insertOnClickOnTag() {
         })
     });
 }
-
 
 /**
  * Stampa in pagina messagio di noNews
