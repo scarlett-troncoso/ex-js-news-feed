@@ -1,4 +1,5 @@
 console.log('funziona');
+const divCard = document.querySelector('.cardAppend');
 
 const dati = [
     {
@@ -43,47 +44,37 @@ const datiSaved = []
 console.log(datiSaved);
 
 /**
- * Genera markup della card
- * @param {object} dato dato di ogni ogetto dell array
+ * Genera markup della card della new
+ * @param {object} dati dato di ogni ogetto dell array
  * @returns markup della card
  */
-function generateCard(dato) {
+function renderCards(dati) {
+    divCard.innerHTML = '';
 
-    return     `<div class="card my-3 m-auto" style="width: 42rem;">
+dati.forEach(function (dato) {
+    const {id, title, content, tags, author, published, foto} = dato; 
+
+divCard.innerHTML +=
+               `<div class="card my-3 m-auto" style="width: 42rem;">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h5 class="card-title d-flex"> ${dato.title} </h5>
-                            <i class= "fa-regular fa-bookmark" id="save-${dato.id}" data-id="${dato.id}"></i>
+                            <h5 class="card-title d-flex"> ${title} </h5>
+                            <i class= "fa-regular fa-bookmark" id="save-${id}" data-id="${id}"></i>
                         </div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${dato.author}</h6>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">In data ${dato.published}</h6>
-                        <p class="card-text">${dato.content}</p>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
+                        <p class="card-text">${content}</p>
                         <div class="">
-                            <img src="./images/${dato.foto}.jpg" alt="${dato.foto}-photography">
+                            <img src="./images/${foto}.jpg" alt="${foto}-photography">
                         </div>
-                        <button type="button" class="${dato.tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : dato.tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : dato.tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tags[0]}</button>
-                        <button type="button" class="${dato.tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : dato.tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${dato.tags[1]}</button>
+                        <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
+                        <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
                     </div>
                 </div>`;
+            });
 }
 
-const divCard = document.querySelector('.cardAppend');
-
-renderCards(dati, divCard);
-
-/**
- * stampa la lista dei dati nelle card 
- * @param {array} datiList lista degli oggetti degli array
- * @param {object} domElement dove mettere le card
- */
-function renderCards(datiList, domElement) {
-    datiList.forEach(dato => {
-        const datoEl = generateCard(dato);
-        console.log(datoEl);
-        domElement.insertAdjacentHTML('beforeend', datoEl);
-        insertOnClickOnTag(dato);    
-    });
-}
+renderCards(dati);
 
 /*
 Step 3: filtri
