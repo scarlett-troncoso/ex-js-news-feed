@@ -1,5 +1,7 @@
 console.log('funziona');
 const divCard = document.querySelector('.cardAppend');
+const showSave = document.getElementById('showsave');
+const idSelect = document.getElementById('tag_type');
 
 const dati = [
     {
@@ -43,39 +45,6 @@ const dati = [
 const datiSaved = []
 console.log(datiSaved);
 
-/**
- * Genera markup della card della new
- * @param {object} dati dato di ogni ogetto dell array
- * @returns markup della card
- */
-function renderCards(dati) {
-    divCard.innerHTML = '';
-
-    dati.forEach(function (dato) {
-        const {id, title, content, tags, author, published, foto} = dato; 
-        
-            divCard.innerHTML +=
-                        `<div class="card my-3 m-auto" style="width: 42rem;">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between cont-bookMark">
-                                        <h5 class="card-title d-flex"> ${title} </h5>
-                                        <i class= "${isSaved(dato) ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'}" id="save" data-id="${id}"></i>
-                                    </div>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
-                                    <p class="card-text">${content}</p>
-                                    <div class="">
-                                        <img src="./images/${foto}.jpg" alt="${foto}-photography">
-                                    </div>
-                                    <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
-                                    <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
-                                </div>
-                            </div>`;
-                }); 
-    }
-
-renderCards(dati);
-insertOnClickOnTag()
 
 /*
 Step 3: filtri
@@ -86,7 +55,8 @@ selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio 
     ● filtro per news salvate
 */
 
-document.getElementById('tag_type').addEventListener('change',
+
+idSelect.addEventListener('change',
     /**
      * filtra i tag della select, al click di selezione
      * @param {array} e evento
@@ -142,7 +112,6 @@ function isSaved(dato) {
     return datiSaved.includes(dato.id);
 }
 
-
 /**
  * Al click su bookmark cambia colore, salva la news, e aggiunge il suo id in datiSaved
  * @param {array} dato 
@@ -160,7 +129,14 @@ function insertOnClickOnTag() {
     });
 }
 
-const showSave = document.getElementById('showsave')
+/**
+ * Stampa in pagina messagio di noNews
+ */
+function noNews() {
+    divCard.innerHTML = `<div class="noNews">
+                            <h1 class="text-center my-3">You haven't saved anything yet</h1>
+                        </div>`;
+}
 
 showSave.addEventListener('click', function (e) {
     divCard.innerHTML = "";
@@ -169,9 +145,7 @@ showSave.addEventListener('click', function (e) {
         renderCards(datiSaved, divCard);
         datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
         if (datiSaved.length === 0) {
-            divCard.innerHTML = `<div class="noNews">
-                                    <h1 class="text-center my-3">You haven't saved anything yet</h1>
-                                </div>`;
+            noNews();
         }
     } else if (!showSave.checked){
         renderCards(dati, divCard)
@@ -181,3 +155,37 @@ showSave.addEventListener('click', function (e) {
             }
     })
 
+
+/**
+ * Genera markup della card della new
+ * @param {object} dati dato di ogni ogetto dell array
+ * @returns markup della card
+ */
+function renderCards(dati) {
+    divCard.innerHTML = '';
+
+    dati.forEach(function (dato) {
+        const {id, title, content, tags, author, published, foto} = dato; 
+        
+            divCard.innerHTML +=
+                        `<div class="card my-3 m-auto" style="width: 42rem;">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between cont-bookMark">
+                                        <h5 class="card-title d-flex"> ${title} </h5>
+                                        <i class= "${isSaved(dato) ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'}" id="save" data-id="${id}"></i>
+                                    </div>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
+                                    <p class="card-text">${content}</p>
+                                    <div class="">
+                                        <img src="./images/${foto}.jpg" alt="${foto}-photography">
+                                    </div>
+                                    <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
+                                    <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
+                                </div>
+                            </div>`;
+                }); 
+    }
+
+renderCards(dati);
+insertOnClickOnTag()
