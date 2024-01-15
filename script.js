@@ -47,16 +47,18 @@ console.log(datiSaved);
 
 const tags = ['geo', 'tech', 'viaggi', 'cucina', 'arte'] ;
 
+// verifica se un id é incluso in datiSaved 
+/**
+ * Verifica se un id é incluso nelle id di datiSaved
+ * @param {object} dato 
+ * @returns true se quelli id sono inclusi in datiSaved
+ */
+function isSaved(dato) {
+    return datiSaved.includes(dato.id);
+}
 
-/*
-Step 3: filtri
-- Crea l’interfaccia dei filtri utilizzando tag di input appropriati. Recupera in JavaScript i valori
-selezionati dall’utente da utilizzare nel codice per le logiche di filtraggio gli elementi.
-- I filtri richiesti sono:
-    ● filtro per singolo tag
-    ● filtro per news salvate
-*/
 
+// filtro per singolo tag
 /**
  * Verifica se é incluso nelle array tags o no
  * @param {array} arrayDati dati
@@ -68,61 +70,30 @@ function filterByTag(arrayDati, tag) {
     return arrayDati.filter((dato) => dato.tags.includes(tag));
 }
 
-idSelect.addEventListener('change',
-    /**
-     * filtra i tag della select, al click di selezione
-     * @param {array} e evento
-     */
-    function(e){
-        console.log(e.target.value);
-
-        const filteredTags = dati.filter(dato => {
-
-          return dato.tags[0] === e.target.value  || dato.tags[1] === e.target.value || e.target.value === 'all'
-
-        })
-
-        console.log(filteredTags)
-
-        divCard.innerHTML = ""
-
-        renderCards(filteredTags, divCard)
-
-
-        const list =  datiSaved.forEach(dat => {
-            dat.id 
-        })
-
-        const element = filteredTags.forEach(filt =>  {
-            filt.id
-        })
-
-        if (list === element) {
-            datiSaved.forEach(dato => document.getElementById('save-' + dato.id).classList = 'fa-solid fa-bookmark');
-        }
-
-    })
-
-/*
-- Crea su ogni componente News un pulsante per il salvataggio della News.
-
-- Se clicchiamo l’icona bookmark, cambiamo l’aspetto dell’icona (es. da vuota a piena) e
-aggiungiamo l’id della News nell’array degli id delle news salvate.
-
-- L’id della news è un dato “nascosto” che vorrai inserire in pagina per recuperarlo in seguito
-al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
-
-- In fase di stampa dell’elenco di news dovrai controllare se la news è salvata o meno per
-poter dare il giusto aspetto all’icona bookmark.  */
-
-/**
- * Verifica se un id é incluso nelle id di datiSaved
- * @param {object} dato 
- * @returns true se quelli id sono inclusi in datiSaved
- */
-function isSaved(dato) {
-    return datiSaved.includes(dato.id);
+// filtro per singolo elemento salvato
+function filterOnlySaved(arrayDati) { // filtra gli array di cui id inclusi in datiSaved
+    return arrayDati.filter((dato) => datiSaved.includes(dato.id)); // ogetto che ha l'id incluso in datiSaved
 }
+
+
+function applyFilters() {
+    const tag = idSelect.value;
+
+    let filteredNews;
+    filteredNews = filterByTag(dati, tag); 
+
+    if (showSave.checked){
+    filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
+    }
+
+    if (filteredNews.length > 0) {
+        renderCards(filteredNews);
+        insertOnClickOnTag();
+    } else {
+        noNews();
+    }
+}
+
 
 /**
  * Al click su bookmark cambia colore, salva la news, e aggiunge il suo id in datiSaved
@@ -141,6 +112,7 @@ function insertOnClickOnTag() {
     });
 }
 
+
 /**
  * Stampa in pagina messagio di noNews
  */
@@ -149,23 +121,6 @@ function noNews() {
                             <h1 class="text-center my-3">You haven't saved anything yet</h1>
                         </div>`;
 }
-
-showSave.addEventListener('click', function (e) {
-    divCard.innerHTML = "";
-
-    if (showSave.checked) {
-        renderCards(datiSaved, divCard);
-        datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
-        if (datiSaved.length === 0) {
-            noNews();
-        }
-    } else if (!showSave.checked){
-        renderCards(dati, divCard)
-        datiSaved.forEach(datoSalvato => document.getElementById('save-' + datoSalvato.id).classList = 'fa-solid fa-bookmark');
-        } else {
-            renderCards(dati, divCard)
-            }
-    })
 
 
 /**
@@ -198,6 +153,14 @@ function renderCards(dati) {
                             </div>`;
                 }); 
     }
+
+/*
+showSave.addEventListener('click', function (e) {
+    })
+
+idSelect.addEventListener('change', function(e){      
+    })*/
+
 
 renderCards(dati);
 insertOnClickOnTag()
