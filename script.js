@@ -3,7 +3,7 @@ const divCard = document.querySelector('.cardAppend');
 
 const dati = [
     {
-        id: '1' ,
+        id: 1,
         title: 'Scoperta di una nuova specie di papera di gomma',
         content: 'Scoperta di una nuova specie di papera di gomma.',
         tags: ['geo', 'tech'],
@@ -12,7 +12,7 @@ const dati = [
         foto: 'rubber-duck',
     },
     {
-        id: '2',
+        id: 2,
         title: 'Esplorando le profondità marine: il mistero degli abissi',
         content: 'Esplorando le profondità marine: il mistero degli abissi',
         tags: ['viaggi', 'geo'],
@@ -21,7 +21,7 @@ const dati = [
         foto: 'deep-sea',
     },
     {
-        id: '3',
+        id: 3,
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
         tags: ['cucina', ''],
@@ -30,7 +30,7 @@ const dati = [
         foto: 'kitchen-food',
     },
     {
-        id: '4',
+        id: 4,
         title: 'Arte moderna: oltre i confini convenzionali',
         content: 'Un analisi delle tendenze e delle sfide nell\'arte contemporanea, con interviste a artisti emergenti.',
         tags: ['arte', 'tech'],
@@ -51,30 +51,31 @@ console.log(datiSaved);
 function renderCards(dati) {
     divCard.innerHTML = '';
 
-dati.forEach(function (dato) {
-    const {id, title, content, tags, author, published, foto} = dato; 
-
-divCard.innerHTML +=
-               `<div class="card my-3 m-auto" style="width: 42rem;">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title d-flex"> ${title} </h5>
-                            <i class= "fa-regular fa-bookmark" id="save-${id}" data-id="${id}"></i>
-                        </div>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
-                        <p class="card-text">${content}</p>
-                        <div class="">
-                            <img src="./images/${foto}.jpg" alt="${foto}-photography">
-                        </div>
-                        <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
-                        <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
-                    </div>
-                </div>`;
-            });
-}
+    dati.forEach(function (dato) {
+        const {id, title, content, tags, author, published, foto} = dato; 
+        
+            divCard.innerHTML +=
+                        `<div class="card my-3 m-auto" style="width: 42rem;">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between cont-bookMark">
+                                        <h5 class="card-title d-flex"> ${title} </h5>
+                                        <i class= "${isSaved(dato) ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'}" id="save" data-id="${id}"></i>
+                                    </div>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">Publicato da ${author}</h6>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">In data ${published}</h6>
+                                    <p class="card-text">${content}</p>
+                                    <div class="">
+                                        <img src="./images/${foto}.jpg" alt="${foto}-photography">
+                                    </div>
+                                    <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
+                                    <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
+                                </div>
+                            </div>`;
+                }); 
+    }
 
 renderCards(dati);
+insertOnClickOnTag()
 
 /*
 Step 3: filtri
@@ -133,23 +134,29 @@ al click dell’icona bookmark. Per farlo dovresti utilizzare un data-attribute.
 poter dare il giusto aspetto all’icona bookmark.  */
 
 /**
- * Al click su bookmark cambia colore e salva la news, e la aggiunge nell’array degli id delle news salvate
+ * Verifica se un id é incluso nelle id di datiSaved
+ * @param {object} dato 
+ * @returns true se quelli id sono inclusi in datiSaved
+ */
+function isSaved(dato) {
+    return datiSaved.includes(dato.id);
+}
+
+
+/**
+ * Al click su bookmark cambia colore, salva la news, e aggiunge il suo id in datiSaved
  * @param {array} dato 
  */
-function insertOnClickOnTag(dato) {
-
-    const save = document.getElementById('save-' + dato.id)
-
-    save.addEventListener('click', function (e) {
-        console.log('clicked');
-        
-        const sav = save.classList;
-        //save.classList = sav.contains("fa-regular") ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark'; //questo per fare deseleziona
-        save.classList = 'fa-solid fa-bookmark';
-
-        if (datiSaved.filter(datoSalvato => datoSalvato.id === dato.id)) {
-        datiSaved.push(dato)
-    }
+function insertOnClickOnTag() {
+    const save = document.querySelectorAll('div.cont-bookMark > i')
+    save.forEach((sav) => {
+        sav.addEventListener('click', function (e) {
+            if (isSaved(sav)) return; 
+            const idSave = Number(sav.dataset.id);
+            datiSaved.push(idSave)
+            console.log('saved', datiSaved);
+            sav.classList = 'fa-solid fa-bookmark';           
+        })
     });
 }
 
