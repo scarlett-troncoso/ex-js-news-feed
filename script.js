@@ -52,6 +52,15 @@ const tags = [...new Set(tagOfMap)];
 console.log(tags); 
 
 
+// Prova per filtro con button
+function buttonTagsFilter() {
+    const buttons = document.querySelectorAll('button')
+    buttons.forEach((butt) => {
+        butt.classList = '';
+        console.log(butt);
+        });
+    };
+
 /**
  * Cambia il format della data a dd-mm-yyyy
  * @param {published} string 
@@ -83,7 +92,7 @@ function isSaved(dato) {
  */
 function filterByTag(arrayDati, tag) {
     if (!tag) return arrayDati;
-    return arrayDati.filter((dato) => dato.tags.includes(tag));
+    return arrayDati.filter((dato) => dato.tags.includes(tag)); //dacci i dato che includono quello tag
 }
 
 // filtro per singolo elemento salvato
@@ -96,7 +105,7 @@ function applyFilters() {
     const tag = idSelect.value;
 
     let filteredNews;
-    filteredNews = filterByTag(dati, tag); 
+    filteredNews = filterByTag(dati, tag); //dacci i dato che includono quello tag selezionato della select
 
     if (showSave.checked){
     filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
@@ -162,16 +171,19 @@ function renderCards(dati) {
                                     <div class="">
                                         <img src="./images/${foto}.jpg" alt="${foto}-photography">
                                     </div>
-                                    <button type="button" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
-                                    <button type="button" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
+                                    <button onclick="${buttonTagsFilter()}" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
+                                    <button onclick="${buttonTagsFilter()}" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
                                 </div>
                             </div>`;
                 }); 
     }
 
+    
 
 idSelect.addEventListener('change', applyFilters)
 showSave.addEventListener('change', applyFilters)
 
 renderCards(dati);
 insertOnClickOnTag()
+
+//
