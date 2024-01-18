@@ -26,7 +26,7 @@ const dati = [
         id: 3,
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
         content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
-        tags: ['cucina'],
+        tags: ['cucina', ''],
         author: 'Marta Bianchi',
         published: '2023-04-20',
         foto: 'kitchen-food',
@@ -45,21 +45,13 @@ const dati = [
 const datiSaved = [];
 console.log(datiSaved);
 
+
 // Inserire tutti i tag in un array
 const tagOfMap = []
 dati.map(dato => tagOfMap.push(dato.tags[0], dato.tags[1]));
 const tags = [...new Set(tagOfMap)];
 console.log(tags); 
 
-
-// Prova per filtro con button
-function buttonTagsFilter() {
-    const buttons = document.querySelectorAll('button')
-    buttons.forEach((butt) => {
-        butt.classList = '';
-        console.log(butt);
-        });
-    };
 
 /**
  * Cambia il format della data a dd-mm-yyyy
@@ -103,10 +95,11 @@ function filterOnlySaved(arrayDati) { // filtra gli array di cui id inclusi in d
 
 function applyFilters() {
     const tag = idSelect.value;
+    console.log(tag);
 
     let filteredNews;
-    filteredNews = filterByTag(dati, tag); //dacci i dato che includono quello tag selezionato della select
-
+    filteredNews = filterByTag(dati, tag); //dacci tutta la new dell dato o dati che includono quello tag selezionato della select
+    console.log(filteredNews);
     if (showSave.checked){
     filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
     }
@@ -145,7 +138,7 @@ function noNews() {
                             <h1 class="text-center my-3">No news</h1>
                         </div>`;
 }
-
+  
 
 /**
  * Genera markup della card della new
@@ -171,19 +164,44 @@ function renderCards(dati) {
                                     <div class="">
                                         <img src="./images/${foto}.jpg" alt="${foto}-photography">
                                     </div>
-                                    <button onclick="${buttonTagsFilter()}" class="${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
-                                    <button onclick="${buttonTagsFilter()}" class="${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
+                                    <button class="buttonBtn ${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
+                                    <button class="buttonBtn ${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
                                 </div>
                             </div>`;
                 }); 
+
+                [...document.querySelectorAll('.buttonBtn')].forEach(function buttonFunction(item) {
+                    item.addEventListener("click", function (e) {
+                        const itemButton = item.textContent
+                        tagsButtons.push(itemButton)
+                        console.log('clicked', tagsButtons);
+                        
+                        let filteredNewsButton;
+                        filteredNewsButton = filterByTag(dati, itemButton) // dacci i dato che includono questo tag clickado dal button
+                        console.log(filteredNewsButton);
+
+                        if (showSave.checked){
+                            filteredNewsButton = filterOnlySaved(filteredNewsButton); //id dei tag selezionati e anche dei id delle news salvate
+                            } if (filteredNewsButton.length > 0) {
+                                renderCards(filteredNewsButton);
+                                insertOnClickOnTag();
+                            } else {
+                                noNews();
+                            }
+                    })
+                })
     }
 
+//PROVE PER FUNZIONE BUTTON
+const tagsButtons = []
+
+//function filterTagsOfButtons() {}
+
+//filterTagsOfButtons ()
     
 
 idSelect.addEventListener('change', applyFilters)
 showSave.addEventListener('change', applyFilters)
 
 renderCards(dati);
-insertOnClickOnTag()
-
-//
+insertOnClickOnTag();
