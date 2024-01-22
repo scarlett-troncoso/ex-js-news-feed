@@ -25,7 +25,7 @@ const dati = [
     {
         id: 3,
         title: 'Viaggio culinario: alla ricerca dei sapori perduti',
-        content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.' ,
+        content: 'Esplorazione di tradizioni culinarie dimenticate e la ricerca di sapori autentici.',
         tags: ['cucina', ''],
         author: 'Marta Bianchi',
         published: '2023-04-20',
@@ -50,7 +50,7 @@ console.log(datiSaved);
 const tagOfMap = []
 dati.map(dato => tagOfMap.push(dato.tags[0], dato.tags[1]));
 const tags = [...new Set(tagOfMap)];
-console.log(tags); 
+console.log(tags);
 
 
 /**
@@ -100,8 +100,8 @@ function applyFilters() {
     let filteredNews;
     filteredNews = filterByTag(dati, tag); //dacci tutta la new dell dato o dati che includono quello tag selezionato della select
     console.log(filteredNews);
-    if (showSave.checked){
-    filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
+    if (showSave.checked) {
+        filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
     }
 
     if (filteredNews.length > 0) {
@@ -121,11 +121,11 @@ function insertOnClickOnTag() {
     const save = document.querySelectorAll('div.cont-bookMark > i')
     save.forEach((sav) => {
         sav.addEventListener('click', function (e) {
-            if (isSaved(sav)) return; 
+            if (isSaved(sav)) return;
             const idSave = Number(sav.dataset.id);
             datiSaved.push(idSave)
             console.log('saved', datiSaved);
-            sav.classList = 'fa-solid fa-bookmark';           
+            sav.classList = 'fa-solid fa-bookmark';
         })
     });
 }
@@ -138,7 +138,8 @@ function noNews() {
                             <h1 class="text-center my-3">No news</h1>
                         </div>`;
 }
-  
+
+const allButtons = []
 
 /**
  * Genera markup della card della new
@@ -149,10 +150,10 @@ function renderCards(dati) {
     divCard.innerHTML = '';
 
     dati.forEach(function (dato) {
-        const {id, title, content, tags, author, published, foto} = dato; 
-        
-            divCard.innerHTML +=
-                        `<div class="card my-3 m-auto" style="width: 42rem;">
+        const { id, title, content, tags, author, published, foto } = dato;
+
+        divCard.innerHTML +=
+            `<div class="card my-3 m-auto" style="width: 42rem;">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between cont-bookMark">
                                         <h5 class="card-title d-flex"> ${title} </h5>
@@ -168,37 +169,41 @@ function renderCards(dati) {
                                     <button class="buttonBtn ${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
                                 </div>
                             </div>`;
-                }); 
+    });
 
-                [...document.querySelectorAll('.buttonBtn')].forEach(function buttonFunction(item) {
-                    item.addEventListener("click", function (e) {
-                        const itemButton = item.textContent
-                        tagsButtons.push(itemButton)
-                        console.log('clicked', tagsButtons);
-                        
-                        let filteredNewsButton;
-                        filteredNewsButton = filterByTag(dati, itemButton) // dacci i dato che includono questo tag clickado dal button
-                        console.log(filteredNewsButton);
 
-                        if (showSave.checked){
-                            filteredNewsButton = filterOnlySaved(filteredNewsButton); //id dei tag selezionati e anche dei id delle news salvate
-                            } if (filteredNewsButton.length > 0) {
-                                renderCards(filteredNewsButton);
-                                insertOnClickOnTag();
-                            } else {
-                                noNews();
-                            }
-                    })
-                })
-    }
+    [...document.querySelectorAll('.buttonBtn')].forEach(function buttonFunction(item) {
+        item.addEventListener("click", function (e) {
+            const itemButton = item.textContent
+            tagsButtons.push(itemButton)
+            console.log('clicked', tagsButtons);
+
+            let filteredNewsButton;
+            filteredNewsButton = filterByTag(dati, tagsButtons[0]) // dacci i dato che includono questo tag clickado dal button
+            console.log(filteredNewsButton);
+
+            if (showSave.checked) {
+                filteredNewsButton = filterOnlySaved(filteredNewsButton); //id dei tag selezionati e anche id delle news salvate
+            } if (tagsButtons.length > 1) {
+                console.log(tagsButtons[1]);
+                let filteredNewsButton;
+                filteredNewsButton = filterByTag(dati, tagsButtons[1]) // dacci i dato che includono questo tag clickado dal button
+                console.log(filteredNewsButton);
+                renderCards(filteredNewsButton);
+                //insertOnClickOnTag();
+            } if (filteredNewsButton.length > 0) {
+                renderCards(filteredNewsButton);
+                insertOnClickOnTag();
+            }
+
+        }
+        )
+    })
+};
 
 //PROVE PER FUNZIONE BUTTON
 const tagsButtons = []
 
-//function filterTagsOfButtons() {}
-
-//filterTagsOfButtons ()
-    
 
 idSelect.addEventListener('change', applyFilters)
 showSave.addEventListener('change', applyFilters)
