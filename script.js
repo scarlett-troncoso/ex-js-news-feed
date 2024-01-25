@@ -43,7 +43,6 @@ const dati = [
 ];
 
 const datiSaved = [];
-console.log(datiSaved);
 
 
 // Inserire tutti i tag in un array
@@ -84,12 +83,12 @@ function isSaved(dato) {
  */
 function filterByTag(arrayDati, tag) {
     if (!tag) return arrayDati;
-    return arrayDati.filter((dato) => dato.tags.includes(tag)); //dacci i dato che includono quello tag
+    return arrayDati.filter((dato) => dato.tags.includes(tag));
 }
 
 // filtro per singolo elemento salvato
-function filterOnlySaved(arrayDati) { // filtra gli array di cui id inclusi in datiSaved
-    return arrayDati.filter((dato) => datiSaved.includes(dato.id)); // ogetto che ha l'id incluso in datiSaved
+function filterOnlySaved(arrayDati) {
+    return arrayDati.filter((dato) => datiSaved.includes(dato.id));
 }
 
 
@@ -98,7 +97,7 @@ function applyFilters() {
     console.log(tag);
 
     let filteredNews;
-    filteredNews = filterByTag(dati, tag); //dacci tutta la new dell dato o dati che includono quello tag selezionato della select
+    filteredNews = filterByTag(dati, tag);
     console.log(filteredNews);
     if (showSave.checked) {
         filteredNews = filterOnlySaved(filteredNews); //id dei tag selezionati e anche dei id delle news salvate
@@ -134,12 +133,11 @@ function insertOnClickOnTag() {
  * Stampa in pagina messagio di noNews
  */
 function noNews() {
-    divCard.innerHTML = `<div class="noNews">
-                            <h1 class="text-center my-3">No news</h1>
+    divCard.innerHTML = `<div class="noNews text-light text-center">
+                            <h1 class="my-3">No news</h1>
+                            <i class="fa-solid fa-comment-slash fs-1"></i>
                         </div>`;
 }
-
-const allButtons = []
 
 /**
  * Genera markup della card della new
@@ -153,7 +151,7 @@ function renderCards(dati) {
         const { id, title, content, tags, author, published, foto } = dato;
 
         divCard.innerHTML +=
-            `<div class="card my-3 m-auto" style="width: 42rem;">
+            `<div class="card sfondi">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between cont-bookMark">
                                         <h5 class="card-title d-flex"> ${title} </h5>
@@ -165,45 +163,12 @@ function renderCards(dati) {
                                     <div class="">
                                         <img src="./images/${foto}.jpg" alt="${foto}-photography">
                                     </div>
-                                    <button class="buttonBtn ${tags[0] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[0] == 'viaggi' ? 'btn btn-danger btn-sm mt-2' : tags[0] == 'cucina' ? 'btn btn-warning btn-sm mt-2' : tags[0] == 'arte' ? 'btn btn-dark btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[0]}</button>
-                                    <button class="buttonBtn ${tags[1] == 'geo' ? 'btn btn-success btn-sm mt-2' : tags[1] == 'tech' ? 'btn btn-primary btn-sm mt-2' : 'btn btn-light btn-sm mt-2'}">${tags[1]}</button>
+                                    <div class="tagStyle ${tags[0] == 'geo' ? 'bg-success' : tags[0] == 'viaggi' ? 'bg-danger' : tags[0] == 'cucina' ? 'bg-warning text-dark' : tags[0] == 'arte' ? 'bg-dark' : 'bg-light'}">${tags[0]}</div>
+                                    <div class="tagStyle ${tags[1] == 'geo' ? 'bg-success' : tags[1] == 'tech' ? 'bg-primary' : 'bg-light'}">${tags[1]}</div>
                                 </div>
                             </div>`;
     });
-
-
-    [...document.querySelectorAll('.buttonBtn')].forEach(function buttonFunction(item) {
-        item.addEventListener("click", function (e) {
-            const itemButton = item.textContent
-            tagsButtons.push(itemButton)
-            console.log('clicked', tagsButtons);
-
-            let filteredNewsButton;
-            filteredNewsButton = filterByTag(dati, tagsButtons[0]) // dacci i dato che includono questo tag clickado dal button
-            console.log(filteredNewsButton);
-
-            if (showSave.checked) {
-                filteredNewsButton = filterOnlySaved(filteredNewsButton); //id dei tag selezionati e anche id delle news salvate
-            } if (tagsButtons.length > 1) {
-                console.log(tagsButtons[1]);
-                let filteredNewsButton;
-                filteredNewsButton = filterByTag(dati, tagsButtons[1]) // dacci i dato che includono questo tag clickado dal button
-                console.log(filteredNewsButton);
-                renderCards(filteredNewsButton);
-                //insertOnClickOnTag();
-            } if (filteredNewsButton.length > 0) {
-                renderCards(filteredNewsButton);
-                insertOnClickOnTag();
-            }
-
-        }
-        )
-    })
 };
-
-//PROVE PER FUNZIONE BUTTON
-const tagsButtons = []
-
 
 idSelect.addEventListener('change', applyFilters)
 showSave.addEventListener('change', applyFilters)
