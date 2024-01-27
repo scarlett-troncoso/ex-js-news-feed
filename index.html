@@ -24,9 +24,11 @@
             <h1 class="text-center my-3 text-light">News Feed</h1>
             <div class="container bg-light sfondi">               
                 <div class="d-flex justify-content-between">
+
+                    <!--Filtra per tags scorrevole-->
                     <div class="d-flex my-3 align-items-center">
-                        <p class="px-2 m-0">Filtra per Tags:</p>
-                        <select name="tag_type " id="tag_type" class="">
+                        <label for="tag_type" class="px-2 m-0">Filtra per Tags:</label>
+                        <select name="tag_type " id="tag_type">
                             <option value="">Tutti i tags</option>
                             <option value="geo">Geo</option>
                             <option value="tech">Tech</option>
@@ -36,6 +38,8 @@
                             <option value="politica">Politica</option>
                         </select>
                     </div>
+
+                    <!--Checkbox Solo news salvate-->
                     <div class="my-3 align-items-center">
                         <input id="showsave" type="checkbox" placeholder="Solo news salvate">
                         <label for="">Solo news salvate</label>
